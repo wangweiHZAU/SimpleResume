@@ -1,45 +1,56 @@
-* {
+*{
+    list-style: none;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+body{
+    background-color:rgb(49, 49, 49);
 }
 
-.grid {
-    display: flex;
-    justify-content: center;
-    width: 800px;
-    flex-wrap: wrap;
-    margin: 0 -15px -15px 0;
-    touch-action: none;
-    user-select: none;
+#container{
+    width: 794px;
+    height: 1123px;
+    margin: 0 auto;
+    background: white;
 }
 
-.grid-item {
-    width: 90px;
-    height: 90px;
-    line-height: 88px;
-    text-align: center;
-    margin: 0 15px 15px 0;
-    background: #FFF;
-    border: 1px solid #d6d6d6;
-    list-style: none;
+.avatar{
+    width: 80px;
+    height: 96px;
+    position: relative;
 }
-
-.active {
-    background: #c8ebfb;
+.avatar img{
+    position: absolute;
+    width: 80px;
+    height: 96px;
 }
-
-.clone-grid-item {
-    position: fixed;
+.avatar img::after{
+    content: '';
+    position: absolute;
     left: 0;
     top: 0;
-    z-index: 1;
-    width: 90px;
-    height: 90px;
-    line-height: 88px;
-    text-align: center;
-    background: #FFF;
-    border: 1px solid #d6d6d6;
-    opacity: 0.8;
-    list-style: none;
+    width: 100%;
+    height: 100%;
+    background: url('./icon/add.png');
 }
+.avatar input{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+}
+
+.ele {
+     height: 40px;
+     border: 1px solid #999;
+     background: cadetblue;
+     margin-top: 2px;
+     border-radius: 10px;
+     padding-left: 10px;
+     color: white;
+     cursor: move;
+}
+
+.last-item{
+    flex: 1;
+ }
