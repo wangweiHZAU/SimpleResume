@@ -18,6 +18,8 @@ reset.click = function(){
     updateCode()    
 }
 
-textareaHTML.addEventListener('input', updateCode)
-textareaCSS.addEventListener('input', updateCode)
+// global event bind
+addHandler(textareaHTML, 'input', updateCode)
+addHandler(textareaCSS, 'input', updateCode)
+
 window.onload = updateCode()
