@@ -1,4 +1,4 @@
-var section = document.querySelector('section'),
+var section = document.querySelector('aside'),
     editor = document.querySelector('.editor'),
     textareaHTML = document.querySelector('.editable-html'),
     textareaCSS = document.querySelector('editable-css'),

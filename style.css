@@ -19,6 +19,18 @@ header, footer{
     padding: 15px 0;
 }
 /* 个人信息 */
+.info{
+    display: flex;
+}
+.info-text{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+}
+.info-item{
+    padding: 2px;
+    width: 100%;
+}
 .avatar{
     margin-left: auto;
     padding: 0 20px;
@@ -27,7 +39,7 @@ header, footer{
     position: relative;
 }
 .avatar img{
-    position: absolute;
+    /* position: absolute; */
     width: 80px;
     height: 120px;
     background: rgb(221, 221, 221);

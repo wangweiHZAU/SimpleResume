@@ -8,11 +8,13 @@
 <body>
 <div id="container">
     <header class="info">
-        <div class="name"></div>
-        <div class="phone"></div>
-        <div class="email"></div>
-        <div class="location"></div>
-        <div class="job"></div>
+        <div class="info-text">
+            <div class="info-item name"></div>
+            <div class="info-item phone"></div>
+            <div class="info-item email"></div>
+            <div class="info-item location"></div>
+            <div class="info-item job"></div>
+        </div>
         <div class="avatar">
             <img src="" alt="头像" onerror="this.src='./icon/add.svg'">
             <input type="file" id="file">
@@ -32,9 +34,11 @@
 <aside>
     <!-- 小节添加、主题色 -->
 </aside>
+<script src="./src/util.js"></script>
+<script src="./src/config.js"></script>
+<script src="./src/insertChild.js"></script>
 <script src="./src/drag.js"></script>
 <script src="./src/imgUpload.js"></script>
-<script src="./src/config.js"></script>
 <script>
     console.log(data)
 </script>
