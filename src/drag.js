@@ -16,7 +16,7 @@ node.ondragover = function(event) {
     event.preventDefault();
     var target = event.target;
     //因为dragover会发生在ul上，所以要判断是不是li
-    if (target.nodeName === "LI") {
+    if (target.nodeName === "SECTION") {
         if (target !== dragging) {
             //getBoundingClientRect()用于获取某个元素相对于视窗的位置集合
             var targetRect = target.getBoundingClientRect();
