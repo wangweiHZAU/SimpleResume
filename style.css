@@ -76,3 +76,14 @@ header, section, footer{
 .last-item{
     flex: 1;
  }
+
+ .hover-item:hover{
+    position: relative;
+ }
+ .hover-item:hover::after{
+     content: url('icon/x.png');
+     position: absolute;
+     left: 10px;
+     bottom: 15px;
+     transform: scale(0.1);
+ }

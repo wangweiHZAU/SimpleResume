@@ -6,7 +6,7 @@ node.ondragstart = function(event) {
     //console.log("start");
     //firefox设置了setData后元素才能拖动！！！！
     //event.target出发事件的元素
-    event.dataTransfer.setData("te", event.target.innerText); //不能使用text，firefox会打开新tab
+    event.dataTransfer.setData("text/plain", event.target.innerText); //不能使用text，firefox会打开新tab
     //event.dataTransfer.setData("self", event.target);
     dragging = event.target;
 }
