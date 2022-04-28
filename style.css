@@ -24,6 +24,10 @@ header, section, footer{
 /* 个人信息 */
 .info{
     display: flex;
+    flex-direction: column;
+}
+.info-content{
+    display: flex;
 }
 .info-text{
     font-size: 16px;
@@ -63,9 +67,10 @@ header, section, footer{
 
 /* 工作内容、项目经历 */
 .title{
-    padding-bottom: 12px;
+    padding-bottom: 2px;
     font-weight: 700;
-
+    border-bottom: 2px solid blue;
+    margin-bottom: 10px;
 }
 #container ul li{
     padding-left: 15px;
@@ -75,6 +80,8 @@ header, section, footer{
 /* 个人总结 */
 .last-item{
     flex: 1;
+    margin: 0;
+    /* border-bottom: 5px solid red; */
  }
 
  .hover-item:hover{
@@ -86,4 +93,5 @@ header, section, footer{
      left: 10px;
      bottom: 15px;
      transform: scale(0.1);
+     border-radius: 50%;
  }

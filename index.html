@@ -8,17 +8,21 @@
 <body>
 <div id="container">
     <header class="info">
-        <div class="info-text">
-            <div class="info-item name"></div>
-            <div class="info-item phone"></div>
-            <div class="info-item email"></div>
-            <div class="info-item location"></div>
-            <div class="info-item job"></div>
+        <div class="title">基本信息</div>
+        <div class="info-content">
+            <div class="info-text">
+                <div class="info-item name"></div>
+                <div class="info-item phone"></div>
+                <div class="info-item email"></div>
+                <div class="info-item location"></div>
+                <div class="info-item job"></div>
+            </div>
+            <div class="avatar hover-item">
+                <img src="" alt="头像" onerror="this.src='./icon/add.svg'">
+                <input type="file" id="file">
+            </div>
         </div>
-        <div class="avatar hover-item">
-            <img src="" alt="头像" onerror="this.src='./icon/add.svg'">
-            <input type="file" id="file">
-        </div>
+        
 
     </header>
     <section class="content" draggable="true">
