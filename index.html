@@ -5,10 +5,12 @@
     <title>Title</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body contenteditable="true">
 <div id="container">
     <header class="info">
-        <div class="title">基本信息</div>
+        <div class="decorate">
+            <div class="title">基本信息</div>
+        </div>
         <div class="info-content">
             <div class="info-text">
                 <div class="info-item name"></div>
@@ -26,33 +28,72 @@
 
     </header>
     <section class="content" draggable="true">
-        <div class="title">教育经历</div>
+        <div class="decorate">
+            <div class="title">教育经历</div>
+        </div>
         <ul>
-            <li>专业技能</li>
-            <li>大学经历</li>
-            <li>实践项目</li>
-            <li>自我看法</li>
-            <li>兴趣爱好</li>
+            <div class="item-header">
+                <div class="header-content">
+                    专业技能
+                </div>
+                <div class="header-year">
+                    2015-2019
+                </div>
+            </div>
+            <li class="item-content">
+                <textarea>
+                    专业技能
+                </textarea>
+            </li>
+            <li class="item-content">实践项目</li>
+            <li class="item-content">自我看法</li>
+            <li class="item-content">兴趣爱好</li>
         </ul>
     </section>
     <section class="content" draggable="true">
-        <div class="title">项目经历</div>
+        <div class="decorate">
+            <div class="title">项目经历</div>
+        </div>
         <ul>
-            <li>专业技能</li>
-            <li>大学经历</li>
-            <li>实践项目</li>
-            <li>自我看法</li>
-            <li>兴趣爱好</li>
+            <div class="item-header">
+                <div class="header-content">
+                    专业技能
+                </div>
+                <div class="header-year">
+                    2019-2022
+                </div>
+            </div>
+            <li class="item-content">
+                <textarea>
+                    专业技能
+                </textarea>
+            </li>
+            <li class="item-content">实践项目</li>
+            <li class="item-content">自我看法</li>
+            <li class="item-content">兴趣爱好</li>
         </ul>
     </section>
     <footer class="self-intro last-item">
-        <div class="title">自我评价</div>
+        <div class="decorate">
+            <div class="title">自我评价</div>
+        </div>
         <ul>
-            <li>专业技能</li>
-            <li>大学经历</li>
-            <li>实践项目</li>
-            <li>自我看法</li>
-            <li>兴趣爱好</li>
+            <div class="item-header">
+                <div class="header-content">
+                    专业技能
+                </div>
+                <div class="header-year">
+                    2021.6-2022.9
+                </div>
+            </div>
+            <li class="item-content">
+                <textarea>
+                    专业技能
+                </textarea>
+            </li>
+            <li class="item-content">实践项目</li>
+            <li class="item-content">自我看法</li>
+            <li class="item-content">兴趣爱好</li>
         </ul>
     </footer>
 </div>
