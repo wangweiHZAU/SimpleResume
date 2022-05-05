@@ -2,6 +2,20 @@ const canvas = document.querySelector('#ref-line')
 const ctx = canvas.getContext('2d')
 const body = document.body.getBoundingClientRect()
 
+const debounce = function(fn, timeout){
+    let timer;
+    return function(...args){
+        let that = this
+        if(timer){
+            return
+        }
+        timer = setTimeout(function(){
+            fn.apply(that, args)
+            timer = null
+        }, timeout)
+    }
+}
+
 let hover = true,
     click = true,
     doubleClick = false,
@@ -28,21 +42,25 @@ const mouseMoveControl = function(){
     if (window.onmousemove){
         _mv = window.onmousemove
     }
-    const mousemove = function(e){
+    const mouseMove = function(e){
         if(e.target.id === 'ref-line'){
             ctx.clearRect(0, 0, width, height)
+            console.log(e.clientX, e.clientY)
             drawLine([[0, e.clientY], [width, e.clientY]], 'blue')
             drawLine([[e.clientX, 0], [e.clientX, height]], 'red')
         }
     }
     window.onmousemove = function(e){
         if(_mv){
-            mousemove.call(this, e)
+            debounce(mouseMove, 100).call(this, e)
+            // mouseMove.call(this, e)
             _mv.call(this, e)
         } else{
-            mousemove.call(this, e)
+            // mouseMove.call(this, e)
+            debounce(mouseMove, 100).call(this, e)
         }
     }
 }
+
 
 mouseMoveControl()
