@@ -1,6 +1,17 @@
 const canvas = document.querySelector('#ref-line')
 const ctx = canvas.getContext('2d')
 const body = document.body.getBoundingClientRect()
+const centerPart = canvas.getClientRects()
+
+let hover = true,
+    click = true,
+    doubleClick = false,
+    cLeft = centerPart[0].left,
+    cTop = centerPart[0].top,
+    cRight = centerPart[0].right,
+    width = body.width - cLeft,
+    height = body.height - cTop;
+const storeLine = [] // 存储已经标记过的点
 
 const debounce = function(fn, timeout){
     let timer;
@@ -15,12 +26,6 @@ const debounce = function(fn, timeout){
         }, timeout)
     }
 }
-
-let hover = true,
-    click = true,
-    doubleClick = false,
-    width = body.width,
-    height = body.height
 
 
 // 改变鼠标移动事件
@@ -43,11 +48,10 @@ const mouseMoveControl = function(){
         _mv = window.onmousemove
     }
     const mouseMove = function(e){
-        if(e.target.id === 'ref-line'){
-            ctx.clearRect(0, 0, width, height)
-            console.log(e.clientX, e.clientY)
-            drawLine([[0, e.clientY], [width, e.clientY]], 'blue')
-            drawLine([[e.clientX, 0], [e.clientX, height]], 'red')
+        if(e.clientX >= cLeft && e.clientX <= cRight && hover){
+        ctx.clearRect(0, 0, width, height)
+        drawLine([[0, e.pageY], [width, e.pageY]], 'blue')
+        drawLine([[e.clientX-cLeft, 0], [e.clientX-cLeft, height]], 'red')
         }
     }
     window.onmousemove = function(e){
@@ -57,10 +61,14 @@ const mouseMoveControl = function(){
             _mv.call(this, e)
         } else{
             // mouseMove.call(this, e)
-            debounce(mouseMove, 100).call(this, e)
+            debounce(mouseMove, 50).call(this, e)
         }
     }
 }
+window.onclick = function(e){
+    console.log(centerPart[0].top, e)
+}
+drawLine([[0,0], [100, 100]], 'yellow')
 
 
 mouseMoveControl()
