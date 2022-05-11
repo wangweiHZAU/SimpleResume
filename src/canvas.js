@@ -50,8 +50,12 @@ const mouseMoveControl = function(){
     const mouseMove = function(e){
         if(e.clientX >= cLeft && e.clientX <= cRight && hover){
         ctx.clearRect(0, 0, width, height)
+        // TODO: 横纵分别表示
         drawLine([[0, e.pageY], [width, e.pageY]], 'blue')
         drawLine([[e.clientX-cLeft, 0], [e.clientX-cLeft, height]], 'red')
+        } else{
+            ctx.clearRect(0, 0, width, height)
+            // TODO: 添加已标注坐标
         }
     }
     window.onmousemove = function(e){
@@ -61,14 +65,14 @@ const mouseMoveControl = function(){
             _mv.call(this, e)
         } else{
             // mouseMove.call(this, e)
-            debounce(mouseMove, 50).call(this, e)
+            debounce(mouseMove, 100).call(this, e)
         }
     }
 }
+// TODO: 建立标记数组
 window.onclick = function(e){
     console.log(centerPart[0].top, e)
 }
-drawLine([[0,0], [100, 100]], 'yellow')
 
 
 mouseMoveControl()
