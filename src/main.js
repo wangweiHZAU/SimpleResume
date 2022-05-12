@@ -4,7 +4,7 @@ const DBSelect = function(){
     window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange ||
         window.msIDBKeyRange
     if(!window.indexedDB){
-        throw new Error("你的浏览器暂不支持数据库存储，请采用最新版chrome或firefox替代！")
+        throw new Error("你的浏览器暂不支持数据库存储, 请采用最新版chrome或firefox替代!")
     }
     let resumeDB, req
     req = window.indexedDB.open('RESUME')
@@ -14,9 +14,9 @@ const DBSelect = function(){
     req.onsuccess = e=>{
         resumeDB = e.target.result
     }
-    resumeDB.onerror = e=>{
-        console.error("数据库错误", e.target.errorCode)
-    }
+    // resumeDB.onerror = e=>{
+    //     console.error("数据库错误", e.target.errorCode)
+    // }
 
 }
 

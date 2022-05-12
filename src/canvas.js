@@ -11,7 +11,9 @@ let hover = true,
     cRight = centerPart[0].right,
     width = body.width - cLeft,
     height = body.height - cTop;
-const storeLine = [] // 存储已经标记过的点
+const storeVerticalLine = [] // 存储已经标记过的纵坐标
+const storeHorizontalLine = [] // 存储已经标记过的横坐标
+let choice = 'horizontal' || 'vertical'
 
 const debounce = function(fn, timeout){
     let timer;
@@ -27,10 +29,16 @@ const debounce = function(fn, timeout){
     }
 }
 
+const repaintMark = function(){
+    storeHorizontalLine.map(item =>{
+        drawLine([[0, item], [width, item]], '#aaa')
+    })
+    storeVerticalLine.map(item =>{
+        drawLine([[item-cLeft, 0], [item-cLeft, height]], '#aaa') 
+    })
+}
 
 // 改变鼠标移动事件
-ctx.lineWidth = 1
-ctx.translate(0.1, 0.1)
 const drawLine = function(arr, lineColor) {
     ctx.beginPath();
     ctx.strokeStyle =  lineColor
@@ -47,31 +55,54 @@ const mouseMoveControl = function(){
     if (window.onmousemove){
         _mv = window.onmousemove
     }
-    const mouseMove = function(e){
-        if(e.clientX >= cLeft && e.clientX <= cRight && hover){
+    const mouseMove = function(e, choice){
+        if(e.pageX >= cLeft && e.pageX <= cRight){
         ctx.clearRect(0, 0, width, height)
-        // TODO: 横纵分别表示
-        drawLine([[0, e.pageY], [width, e.pageY]], 'blue')
-        drawLine([[e.clientX-cLeft, 0], [e.clientX-cLeft, height]], 'red')
+        // 判断横纵辅助线
+        switch (choice){
+            case 'horizontal':
+                drawLine([[0, e.pageY], [width, e.pageY]], 'blue')
+                break;
+            case 'vertical':
+                drawLine([[e.pageX-cLeft, 0], [e.pageX-cLeft, height]], 'red')
+                break;
+            default:
+                console.log('未指定横纵辅助线')
+                break;
+        }
         } else{
             ctx.clearRect(0, 0, width, height)
-            // TODO: 添加已标注坐标
         }
+        // 重绘已标注点
+        repaintMark()
     }
     window.onmousemove = function(e){
         if(_mv){
-            debounce(mouseMove, 100).call(this, e)
+            debounce(mouseMove, 100).call(this, e, choice)
             // mouseMove.call(this, e)
             _mv.call(this, e)
         } else{
             // mouseMove.call(this, e)
-            debounce(mouseMove, 100).call(this, e)
+            debounce(mouseMove, 100).call(this, e, choice)
         }
     }
 }
-// TODO: 建立标记数组
+// 添加标注点
+let _click
+if (window.onclick){
+    _click = window.onclick
+}
 window.onclick = function(e){
-    console.log(centerPart[0].top, e)
+    if(choice === 'horizontal'){
+        storeHorizontalLine.push(e.pageY)
+        drawLine([[0, e.pageY], [width, e.pageY]], '#aaa')
+    } else if(choice === 'vertical'){
+        storeVerticalLine.push(e.pageX)
+        drawLine([[e.pageX-cLeft, 0], [e.pageX-cLeft, height]], '#aaa')
+    }
+    if(_click){        
+    _click.call(this, e)
+    }
 }
 
 
