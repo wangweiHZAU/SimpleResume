@@ -13,7 +13,8 @@ let hover = true,
     height = body.height - cTop;
 const storeVerticalLine = [] // 存储已经标记过的纵坐标
 const storeHorizontalLine = [] // 存储已经标记过的横坐标
-let choice = 'horizontal' || 'vertical'
+// let choice = 'none' || 'horizontal' || 'vertical'
+let choice =  'vertical'
 
 const debounce = function(fn, timeout){
     let timer;
@@ -67,7 +68,6 @@ const mouseMoveControl = function(){
                 drawLine([[e.pageX-cLeft, 0], [e.pageX-cLeft, height]], 'red')
                 break;
             default:
-                console.log('未指定横纵辅助线')
                 break;
         }
         } else{
@@ -88,22 +88,24 @@ const mouseMoveControl = function(){
     }
 }
 // 添加标注点
-let _click
-if (window.onclick){
-    _click = window.onclick
-}
-window.onclick = function(e){
-    if(choice === 'horizontal'){
-        storeHorizontalLine.push(e.pageY)
-        drawLine([[0, e.pageY], [width, e.pageY]], '#aaa')
-    } else if(choice === 'vertical'){
-        storeVerticalLine.push(e.pageX)
-        drawLine([[e.pageX-cLeft, 0], [e.pageX-cLeft, height]], '#aaa')
+const clickAddMark = function(){
+    let _click
+    if (window.onclick){
+        _click = window.onclick
     }
-    if(_click){        
-    _click.call(this, e)
-    }
+    window.addEventListener('click', function(e){
+        console.log(e)
+        if(choice === 'horizontal'){
+            storeHorizontalLine.push(e.pageY)
+        } else if(choice === 'vertical'){
+            storeVerticalLine.push(e.pageX)
+        }
+        repaintMark()
+        if(_click){        
+        _click.call(this, e)
+        }
+    })    
 }
-
 
 mouseMoveControl()
+clickAddMark()

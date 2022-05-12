@@ -8,6 +8,10 @@
 </head>
 <body contenteditable="true">
 <div id="container">
+    <canvas id="ref-line" width="794" height="1123">
+        <!-- <canvas id="ref-line"> -->
+            <!-- 参考线新增与删除 -->
+    </canvas>
     <header class="info">
         <div class="decorate">
             <div class="title">基本信息</div>
@@ -97,15 +101,17 @@
             <li class="item-content">兴趣爱好</li>
         </ul>
     </footer>
-    <canvas id="ref-line" width="794" height="1123">
-        <!-- <canvas id="ref-line"> -->
-            <!-- 参考线新增与删除 -->
-    </canvas>
 </div>
 <aside>
     <!-- 小节添加、主题色 -->
     <div class="mark-line">
-
+        <div class="mark-header">
+            <div class="title">参考线</div>
+            <img src="./icon/pointer.svg" alt="pointer icon">
+            <img src="./icon/grab.svg" alt="grab icon">
+            <img src="./icon/add.svg" alt="add icon">
+            <img src="./icon/minus.svg" alt="delete icon">
+        </div>
     </div>
 </aside>
 <script src="./src/main.js"></script>

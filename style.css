@@ -115,3 +115,16 @@ header, section, footer{
  .bold{
     font-weight:700;
 }
+
+/* 侧边栏样式 */
+aside .mark-line{
+    position: absolute;
+    top: 100px;
+}
+aside .mark-line .mark-header{
+    background-color:rgb(131, 131, 131);
+    border-radius: 10px;
+}
+aside .mark-line .mark-header img{
+    width: 40px;
+}
