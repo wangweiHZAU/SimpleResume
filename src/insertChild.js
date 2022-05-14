@@ -3,8 +3,7 @@
 //     header: {name: string, age: number, ...others},
 //     sections<section[]>: [{title:string, subtitle, 
 //     span-from: str, span-to: str}, ...others
-//     ],
-//     footer: [str, ...others]
+//     ]
 // }
 
 let docHeader = document.querySelector('.info'),

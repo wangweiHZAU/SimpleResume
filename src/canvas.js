@@ -13,9 +13,10 @@ let hover = true,
     height = body.height - cTop;
 const storeVerticalLine = [] // 存储已经标记过的纵坐标
 const storeHorizontalLine = [] // 存储已经标记过的横坐标
-// let choice = 'none' || 'horizontal' || 'vertical'
-let choice =  'vertical'
+let choice = 'none' || 'horizontal' || 'vertical'
+// let choice =  'vertical'
 
+// 防抖
 const debounce = function(fn, timeout){
     let timer;
     return function(...args){
@@ -30,6 +31,23 @@ const debounce = function(fn, timeout){
     }
 }
 
+// 鼠标样式修改
+const cursorStyle = function(method){
+    switch (method){
+        case "add":
+            canvas.style.cursor = 'crosshair'
+            break
+        case "move":
+            canvas.style.cursor = 'grab'
+            break
+        case 'del':
+            canvas.style.cursor = 'url("../icon/x.svg") 2 2, auto'
+            break
+    }
+}
+cursorStyle('del')
+
+// 标注点重绘
 const repaintMark = function(){
     storeHorizontalLine.map(item =>{
         drawLine([[0, item], [width, item]], '#aaa')
@@ -39,7 +57,7 @@ const repaintMark = function(){
     })
 }
 
-// 改变鼠标移动事件
+// 绘制线条
 const drawLine = function(arr, lineColor) {
     ctx.beginPath();
     ctx.strokeStyle =  lineColor
@@ -51,6 +69,7 @@ const drawLine = function(arr, lineColor) {
     ctx.closePath();
 }
 
+// 改变鼠标移动事件
 const mouseMoveControl = function(){
     let _mv
     if (window.onmousemove){
@@ -87,6 +106,7 @@ const mouseMoveControl = function(){
         }
     }
 }
+
 // 添加标注点
 const clickAddMark = function(){
     let _click
