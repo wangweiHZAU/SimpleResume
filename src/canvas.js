@@ -15,6 +15,7 @@ const storeVerticalLine = [] // 存储已经标记过的纵坐标
 const storeHorizontalLine = [] // 存储已经标记过的横坐标
 let choice = 'none' || 'horizontal' || 'vertical'
 // let choice =  'vertical'
+let refLine = 'add' // 设置初始化时参考线样式
 
 // 防抖
 const debounce = function(fn, timeout){
@@ -41,11 +42,45 @@ const cursorStyle = function(method){
             canvas.style.cursor = 'grab'
             break
         case 'del':
-            canvas.style.cursor = 'url("../icon/x.svg") 2 2, auto'
+            address = location.href + "icon/x.svg"
+            console.log(`url("${address}"), vertical-text`)
+            canvas.style.cursor = `url("${address}"), vertical-text`
+            break
+        default:
+            console.log("Undefined cursor method")
             break
     }
 }
-cursorStyle('del')
+// cursorStyle('del')
+const updateRefLine = function(){
+    cursorStyle(refLine)
+}
+
+const refLineMethod = function(){
+    let markMethod = document.querySelector('.mark-line')
+    if(!markMethod){
+        throw new Error("找不到参考线方式选择框！")
+    }
+    markMethod.addEventListener('click',(e)=>{
+        switch(e.target.id){
+            case 'move':
+                refLine = 'move'
+                break
+            case 'add':
+                refLine = 'add'
+                break
+            case 'del':
+                refLine = 'del'
+                break
+            case 'quit':
+                refLine = ''
+                break
+        }
+        updateRefLine()
+    })
+}()
+
+refLineMethod
 
 // 标注点重绘
 const repaintMark = function(){
