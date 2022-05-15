@@ -13,8 +13,7 @@ let hover = true,
     height = body.height - cTop;
 const storeVerticalLine = [] // 存储已经标记过的纵坐标
 const storeHorizontalLine = [] // 存储已经标记过的横坐标
-let choice = 'none' || 'horizontal' || 'vertical'
-// let choice =  'vertical'
+let choice = 'horizontal' || 'vertical'
 let refLine = 'add' // 设置初始化时参考线样式
 
 // 防抖
@@ -32,7 +31,7 @@ const debounce = function(fn, timeout){
     }
 }
 
-// 鼠标样式修改
+// 鼠标悬浮样式
 const cursorStyle = function(method){
     switch (method){
         case "add":
@@ -51,11 +50,85 @@ const cursorStyle = function(method){
             break
     }
 }
-// cursorStyle('del')
-const updateRefLine = function(){
-    cursorStyle(refLine)
+
+// 退出绘制
+const quitMarkLine = function(){
+    choice = 'none'
 }
 
+// 更新绘制样式
+const updateRefLine = function(){
+    if (!refLine){
+        quitMarkLine()
+    }else{
+        cursorStyle(refLine)
+        mouseMoveControl()
+    }
+}
+
+// 标注点重绘
+const repaintMark = function(){
+    storeHorizontalLine.map(item =>{
+        drawLine([[0, item], [width, item]], '#aaa')
+    })
+    storeVerticalLine.map(item =>{
+        drawLine([[item-cLeft, 0], [item-cLeft, height]], '#aaa') 
+    })
+}
+
+// 参考线操作方式函数绑定
+const refLineMethodFunc = ()=>{
+    // 添加标注点
+    const clickAddMark = function(){
+    let _click
+    if (window.onclick){
+        _click = window.onclick
+    }
+    window.addEventListener('click', function addMark(e){
+        if(e.pageX >= cLeft && e.pageX <= cRight){
+        if(choice === 'horizontal'){
+            storeHorizontalLine.push(e.pageY)
+        } else if(choice === 'vertical'){
+            storeVerticalLine.push(e.pageX)
+        }
+        repaintMark()
+        if(_click){        
+        _click.call(this, e)
+        }
+        }
+    })    
+
+    // 删除标注点
+    const clickDelMark = function(){
+        
+        window.addEventListener('click', function delMark(e){
+        let remList, operate, resList=[]
+        if(choice === 'horizontal'){
+            remList = storeHorizontalLine
+            operate = 'pageY'
+        }else if(choice === 'vertical'){
+            remList = storeVerticalLine
+            operate = 'pageX'
+        } 
+        remList.sort((a, b)=>(a-b))
+        remList.forEach((item)=>{
+            if(item < e[operate]-5 || item > e[operate]+5){
+                resList.push(item)
+            }
+        })
+        if(choice ==='horizontal'){
+            storeHorizontalLine = resList
+        } else{
+            storeVerticalLine = resList
+        }
+        })
+        
+    }
+}
+}
+refLineMethodFunc()
+
+// 参考线操作方式选择
 const refLineMethod = function(){
     let markMethod = document.querySelector('.mark-line')
     if(!markMethod){
@@ -78,19 +151,11 @@ const refLineMethod = function(){
         }
         updateRefLine()
     })
-}()
-
-refLineMethod
-
-// 标注点重绘
-const repaintMark = function(){
-    storeHorizontalLine.map(item =>{
-        drawLine([[0, item], [width, item]], '#aaa')
-    })
-    storeVerticalLine.map(item =>{
-        drawLine([[item-cLeft, 0], [item-cLeft, height]], '#aaa') 
-    })
 }
+
+refLineMethod()
+
+
 
 // 绘制线条
 const drawLine = function(arr, lineColor) {
@@ -142,25 +207,24 @@ const mouseMoveControl = function(){
     }
 }
 
-// 添加标注点
-const clickAddMark = function(){
-    let _click
-    if (window.onclick){
-        _click = window.onclick
-    }
-    window.addEventListener('click', function(e){
-        console.log(e)
-        if(choice === 'horizontal'){
-            storeHorizontalLine.push(e.pageY)
-        } else if(choice === 'vertical'){
-            storeVerticalLine.push(e.pageX)
-        }
-        repaintMark()
-        if(_click){        
-        _click.call(this, e)
-        }
-    })    
-}
 
+// 横纵改变
+const modeChange = function(){
+    let left = document.querySelector('.mode .left'),
+        right = document.querySelector('.mode .right'),
+        mode = document.querySelector('.mark-mode .mode')
+    mode.addEventListener('click', (e)=>{
+        if (e.target.classList.value.includes('left')){
+            left.setAttribute('class', 'left active')
+            right.setAttribute('class', 'right')
+            choice = 'horizontal'
+        } else if(e.target.classList.value.includes('right')){
+            right.setAttribute('class', 'active right')
+            left.setAttribute('class', 'left')
+            choice = 'vertical'
+        }
+    })
+    
+}
+modeChange()
 mouseMoveControl()
-clickAddMark()

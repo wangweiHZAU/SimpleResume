@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="canvas.css">
 </head>
-<body contenteditable="true">
-<div id="container">
+<body>
+<div id="container" contenteditable="true">
     <canvas id="ref-line" width="794" height="1123">
         <!-- <canvas id="ref-line"> -->
             <!-- 参考线新增与删除 -->
@@ -111,6 +111,13 @@
             <img src="./icon/add.svg" alt="add icon" title="添加" id="add">
             <img src="./icon/minus.svg" alt="delete icon" title="删除" id="del">
             <img src="./icon/quit.svg" alt="quit icon" title="退出参考线编辑" id="quit">
+        </div>
+        <div class="mark-mode">
+            <div class="title">参考线模式</div>
+            <div class="mode">
+                <div class="left active">横</div>
+                <div class="right">纵</div>
+            </div>
         </div>
     </div>
 </aside>
