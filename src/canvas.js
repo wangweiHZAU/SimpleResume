@@ -11,10 +11,26 @@ let hover = true,
     cRight = centerPart[0].right,
     width = body.width - cLeft,
     height = body.height - cTop;
-const storeVerticalLine = [] // 存储已经标记过的纵坐标
-const storeHorizontalLine = [] // 存储已经标记过的横坐标
-let choice = 'horizontal' || 'vertical'
+let storeVerticalLine = [] // 存储已经标记过的纵坐标
+let storeHorizontalLine = [] // 存储已经标记过的横坐标
+let choice = 'horizontal' || 'vertical' // 横向或纵向参考线
 let refLine = 'add' // 设置初始化时参考线样式
+let lock = 'open' || 'close'
+
+// 开关canvas
+const switchCanvasPaint = function(lock){
+    let canvasDiv = document.querySelector('.lower-canvas')
+    if(!canvasDiv){
+        console.log("无法开启绘图")
+        throw new Error("No canvas parent root")
+    }
+    if(lock === 'open'){
+    canvasDiv.setAttribute('style', 'position:relative; z-index:1')
+    }else{
+        canvasDiv.setAttribute('style', 'position:relative; z-index:-1') 
+    }
+}
+switchCanvasPaint('close')
 
 // 防抖
 const debounce = function(fn, timeout){
@@ -41,9 +57,7 @@ const cursorStyle = function(method){
             canvas.style.cursor = 'grab'
             break
         case 'del':
-            address = location.href + "icon/x.svg"
-            console.log(`url("${address}"), vertical-text`)
-            canvas.style.cursor = `url("${address}"), vertical-text`
+            canvas.style.cursor = 'vertical-text'
             break
         default:
             console.log("Undefined cursor method")
@@ -80,11 +94,9 @@ const repaintMark = function(){
 const refLineMethodFunc = ()=>{
     // 添加标注点
     const clickAddMark = function(){
-    let _click
-    if (window.onclick){
-        _click = window.onclick
     }
     window.addEventListener('click', function addMark(e){
+        if( refLine!=='add') return;
         if(e.pageX >= cLeft && e.pageX <= cRight){
         if(choice === 'horizontal'){
             storeHorizontalLine.push(e.pageY)
@@ -92,16 +104,13 @@ const refLineMethodFunc = ()=>{
             storeVerticalLine.push(e.pageX)
         }
         repaintMark()
-        if(_click){        
-        _click.call(this, e)
-        }
         }
     })    
 
     // 删除标注点
     const clickDelMark = function(){
-        
         window.addEventListener('click', function delMark(e){
+        if(refLine !== 'del')return;
         let remList, operate, resList=[]
         if(choice === 'horizontal'){
             remList = storeHorizontalLine
@@ -122,10 +131,13 @@ const refLineMethodFunc = ()=>{
             storeVerticalLine = resList
         }
         })
-        
+        repaintMark()
     }
+
+    clickAddMark()
+    clickDelMark()
 }
-}
+
 refLineMethodFunc()
 
 // 参考线操作方式选择
