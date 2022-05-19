@@ -22,4 +22,4 @@ reset.click = function(){
 addHandler(textareaHTML, 'input', updateCode)
 addHandler(textareaCSS, 'input', updateCode)
 
-window.onload = updateCode()
+// window.onload = updateCode()
