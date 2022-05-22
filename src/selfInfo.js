@@ -29,15 +29,13 @@ const createTitle = function(title){
 }
 
 // 个人基础信息
-if(dataHeader){
-    for (const prop in dataHeader){
+if(data.header){
+    for (const prop in data.header){
         item = document.querySelector('.'+prop)
         if(item){
-            item.textContent = prop + ': ' + dataHeader[prop]
+            item.textContent = prop + ': ' + data.header[prop]
         } else{
-            item = document.createElement('div')
-            item.textContent = prop + ': ' + dataHeader[prop]
-            frag.appendChild(item)
+            console.log("未使用参数", prop)
         }
         
     }

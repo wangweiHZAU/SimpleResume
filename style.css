@@ -149,3 +149,10 @@ aside .mark-line .mark-mode .mode .active{
     background-color:rgb(221, 221, 221);
     border-radius: 10px;
 }
+
+/* 下载样式 */
+aside #print{
+    position: fixed;
+    bottom: 40px;
+    background-color: rgb(131, 131, 131);
+}
