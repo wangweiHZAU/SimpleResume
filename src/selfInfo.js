@@ -1,6 +1,5 @@
 
 let docHeader = document.querySelector('.info'),
-    dataHeader = data.header,
     docBody = data.body,
     docFooter = data.footer,
     frag = document.createDocumentFragment(),
@@ -14,21 +13,6 @@ const nameDict = {
     summary: "个人总结"
 }
 
-// 个人基础信息
-console.log(dataHeader)
-if(dataHeader){
-    for (const prop in dataHeader){
-        item = document.querySelector('.'+prop)
-        if(item){
-            item.textContent = prop + ': ' + dataHeader[prop]
-        } else{
-            item = document.createElement('div')
-            item.textContent = prop + ': ' + dataHeader[prop]
-            frag.appendChild(item)
-        }
-        
-    }
-}
 
 const createSection = function(){
     let sec = document.createElement('section')
@@ -43,6 +27,24 @@ const createTitle = function(title){
     div.innerHTML = `<div class="title">${title}</div>`
     return div
 }
+
+// 个人基础信息
+if(dataHeader){
+    for (const prop in dataHeader){
+        item = document.querySelector('.'+prop)
+        if(item){
+            item.textContent = prop + ': ' + dataHeader[prop]
+        } else{
+            item = document.createElement('div')
+            item.textContent = prop + ': ' + dataHeader[prop]
+            frag.appendChild(item)
+        }
+        
+    }
+}
+
+
+// 工作经历、项目经历、获奖信息等
 const createEducationItem = function(dataItem){
     let item = document.createElement('div')
     item.setAttribute('class', 'item-header')
@@ -59,6 +61,17 @@ const createEducationItem = function(dataItem){
     `
     item.innerHTML = template
     return item
+}
+
+if (sections.education){
+    let education = sections.education,
+        sec = createSection()
+    sec.appendChild(createTitle("教育经历"))
+    education.forEach(function(dataItem){
+        sec.appendChild(createEducationItem(dataItem))
+    })
+    // document.querySelector('#container').appendChild(sec)
+    frag.appendChild(sec)
 }
 
 const createProfessionalItem = function(dataItem){
@@ -82,6 +95,17 @@ const createProfessionalItem = function(dataItem){
     return item 
 }
 
+if(sections.professionalExperience){
+    let profession = sections.professionalExperience,
+    sec = createSection()
+    sec.appendChild(createTitle("职业经历"))
+    profession.forEach(function(dataItem){
+        sec.appendChild(createProfessionalItem(dataItem))
+    })
+    // document.querySelector('#container').appendChild(sec)
+    frag.appendChild(sec) 
+}
+
 const createProjectItem = function(dataItem){
     let item = document.createElement('div')
     item.setAttribute('class', 'item-header')
@@ -100,39 +124,6 @@ const createProjectItem = function(dataItem){
     return item 
 }
 
-const createSummaryItem = function(item){
-    let itemList = []
-    item.forEach(function(item){
-        let div = document.createElement('div')
-        div.textContent = item
-        itemList.push(div)
-    })
-    return itemList
-}
-
-// 工作经历、项目经历、获奖信息等
-if (sections.education){
-    let education = sections.education,
-        sec = createSection()
-    sec.appendChild(createTitle("教育经历"))
-    education.forEach(function(dataItem){
-        sec.appendChild(createEducationItem(dataItem))
-    })
-    // document.querySelector('#container').appendChild(sec)
-    frag.appendChild(sec)
-}
-
-if(sections.professionalExperience){
-    let profession = sections.professionalExperience,
-    sec = createSection()
-    sec.appendChild(createTitle("职业经历"))
-    profession.forEach(function(dataItem){
-        sec.appendChild(createProfessionalItem(dataItem))
-    })
-    // document.querySelector('#container').appendChild(sec)
-    frag.appendChild(sec) 
-}
-
 if(sections.projectExperience){
     let project = sections.projectExperience,
     sec = createSection()
@@ -144,14 +135,26 @@ if(sections.projectExperience){
     frag.appendChild(sec)  
 }
 
-// if(sections.summary){
-//     let summary = sections.summary,
-//     sec = createSection()
-//     sec.appendChild(createTitle("个人总结"))
-//     sec.appendChild(createSummaryItem(summary))
-//     // document.querySelector('#container').appendChild(sec)
-//     frag.appendChild(sec) 
-// }
+const createSummaryItem = function(item){
+    let itemList = []
+    item.forEach(function(item){
+        let div = document.createElement('div')
+        div.textContent = item
+        itemList.push(div)
+    })
+    return itemList
+}
+
+if(sections.summary){
+    let summary = sections.summary,
+    sec = createSection()
+    sec.appendChild(createTitle("个人总结"))
+    createSummaryItem(summary).forEach(function(item){
+        sec.appendChild(item)
+    })
+    // document.querySelector('#container').appendChild(sec)
+    frag.appendChild(sec) 
+}
 document.querySelector('#container').appendChild(frag)
 // 自我评价部分
 // last-item, flex: 1
