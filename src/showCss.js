@@ -19,7 +19,7 @@ reset.click = function(){
 }
 
 // global event bind
-addHandler(textareaHTML, 'input', updateCode)
-addHandler(textareaCSS, 'input', updateCode)
+textareaHTML.addEventListener('input', updateCode)
+textareaCSS.addEventListener('input', updateCode)
 
 // window.onload = updateCode()

@@ -68,18 +68,34 @@ const DBSelect = function(ObjectName){
         }
     }
     function update(key, data){
-        
+        req = ResumeDB.transaction([ObjectName], 'readwrite')
+            .objectStore(ObjectName)
+            .put(data)
+        req.onsuccess = function(e){
+            console.log("数据更新成功")
+        }
+        req.onerror = function(e){
+            console.log("数据更新失败", e)
+        }
     }
+    function remove(key){
+        req = ResumeDB.transaction([ObjectName], 'readwrite')
+            .objectStore(ObjectName)
+            .delete(key)
+        req.onsuccess = (e)=>{console.log("数据删除成功")}
+        req.onerror = (e)=>{console.log("数据删除失败", e)}
+    }
+
     // resumeDB.onerror = e=>{
     //     console.error("数据库错误", e.target.errorCode)
     // }
-    return add, read
+    return add, read, readAll, update, remove
 }
 
 const init = function() {
     // 判断本地是否有数据
     const ObjectName = 'RESUME'
-    DBSelect(ObjectName)
+    {add, read, readAll, update, remove}  DBSelect(ObjectName)
     // 根据本地配置进行初始化设置
 }
 
